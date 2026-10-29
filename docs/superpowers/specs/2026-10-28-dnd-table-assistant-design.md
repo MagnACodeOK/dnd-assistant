@@ -28,11 +28,11 @@ Out of scope: combat analytics (enemy HP tracking, save statistics), automatic o
 | Foundry versions | Foundry **v14 build 368**, dnd5e system **6.0.6** | Newer than Claude's detailed knowledge, so the event data structures are verified by a test before anything is built on them (section 8) |
 | Module install | Manifest URL hosted on a public GitHub repo | The user's choice (easiest install and updates) |
 | Store | SQLite, plus Markdown files written into the vault | One queryable timeline, with human-readable output |
-| Local model ("scribe") | Qwen3-8B in LM Studio (already installed, OpenAI-compatible API on `localhost:1234`) | Fits in video memory alongside Whisper with room to spare. It's better than the 4B model on the 2060. |
+| Local model ("scribe") | `qwen/qwen3.5-9b`, already downloaded in LM Studio (OpenAI-compatible API on `localhost:1234`). LM Studio's API token is enabled, so the scribe sends `Authorization: Bearer` using the user environment variable `LMSTUDIO_API_KEY`. | Already installed, so nothing to download. It fits in video memory alongside Whisper with room to spare, and it's better than the 4B model on the 2060. |
 | Claude | Claude Code on the subscription, via skills `/dnd` and `/dnd-recap` | No extra cost. Measure real usage before considering the API. |
 | Code location | `D:\Claude\dnd-assistant` | The user's default working folder |
 
-Estimated video memory use: Foundry, Discord and the browser about 2.5 GB; Whisper about 2–3 GB; Qwen3-8B with a 16K context about 6–7 GB. Total about 11–12 GB of 16 GB.
+Estimated video memory use: Foundry, Discord and the browser about 2.5 GB; Whisper about 2–3 GB; Qwen3.5-9B with a 16K context about 7–8 GB. Total about 11–12 GB of 16 GB.
 
 ## 3. Architecture
 
@@ -80,7 +80,7 @@ The listener, hub and scribe run as **one Python process** (`dnd-assistant`), st
 
 ### 4.3 Hub
 
-- **Web server** on `127.0.0.1` only, port from `config.toml`. It accepts `/event` only with the token, and rejects other origins.
+- **Web server** on `127.0.0.1` only, port from `config.toml`. It accepts `/event` only with the token. CORS preflight is answered only for the configured Foundry origin(s), including the `Access-Control-Allow-Private-Network: true` header that browsers require for localhost. Each event's time is the time the hub received it; any timestamp Foundry sends is kept in its data.
 - **Database:** SQLite in WAL mode (readers don't block the writer), at `<session folder>/session.db`.
   - `events(id, ts, source, kind, speaker, text, data_json)`, where `source` is `voice`, `foundry` or `system`, and `kind` is `speech`, `chat`, `roll`, `combat`, `state`, `gap` or `note`.
   - `meta(key, value)`, which holds the session start time and the scribe's last processed event id.
@@ -97,7 +97,7 @@ The listener, hub and scribe run as **one Python process** (`dnd-assistant`), st
 
 - **Schedule:** runs every 5 minutes, and immediately when 150 or more new events have arrived.
 - **Input:** all events since the last successful run, rendered like `timeline.md`, plus the current list of fact titles so the model can avoid duplicates. It does not get the full notes body.
-- **Call:** LM Studio's OpenAI-compatible API, model Qwen3-8B, with a JSON schema for the response (structured output). If the installed version of LM Studio doesn't support that, it falls back to a JSON-only instruction plus validation.
+- **Call:** LM Studio's OpenAI-compatible API, model `qwen/qwen3.5-9b`, with a JSON schema for the response (structured output). If the installed version of LM Studio doesn't support that, it falls back to a JSON-only instruction plus validation.
 - **Output:** a list of facts, each with `{section, subject, fact, time, certain: bool}`. The sections are fixed: **People, Places, Clues & Lore, Quests & Promises, Loot & Rewards, Party Decisions**.
 - **Merging is done by code, not by the model.** A new fact is appended under its section and subject. An exact duplicate is skipped. Uncertain facts get "(?)" appended. The model never rewrites `session-notes.md`, so earlier facts can't be lost.
 - **Rules given to the model:** record only what was stated in the events, give each fact the time of its source event, and don't infer motives.
@@ -117,11 +117,11 @@ Curse of Strahd/
   glossary.md                    ← Whisper name hints
 ```
 
-`Live Sessions/` is kept separate from `Session Notes/`, so the curated notes stay clean. The hub creates the date folder when a session starts. If the same date is used twice, it adds a suffix (`-2`).
+`Live Sessions/` is kept separate from `Session Notes/`, so the curated notes stay clean. The hub creates the date folder when a session starts. If that date's folder already exists (for example, after a crash), the session continues in it. `dnd-assistant run --new` starts a separate folder with a suffix (`-2`) instead.
 
 ### 4.6 Glossary
 
-`Curse of Strahd/glossary.md` is a plain list of names and terms, one per line. When a session starts, the hub combines it with the file names in `NPCs/` and `Places/`, the names in `Party.md`, and the actor names it receives from Foundry. The result becomes Whisper's `initial_prompt`, which is capped at about 200 tokens, with the most recently used names first. `/dnd-recap` adds new names to the file.
+`Curse of Strahd/glossary.md` is a plain list of names and terms, one per line. When a session starts, the hub combines it with the file names in `NPCs/` and `Places/`, and the actor names it receives from Foundry (party members belong in `glossary.md`). The result becomes Whisper's `initial_prompt`, which is capped at about 200 tokens (800 characters), in this order: Foundry actor names first, then glossary lines, then NPC and place names. It is rebuilt every 10 minutes. `/dnd-recap` adds new names to the file.
 
 ### 4.7 Claude Code skills (user-level, `~/.claude/skills/`)
 
@@ -162,7 +162,7 @@ Curse of Strahd/
 `dnd-mode.ps1` with a desktop shortcut:
 
 1. Runs `C:\Users\magna\GamingMode\GamingMode.ps1 ai`, which starts LM Studio's server bound to `0.0.0.0` (per the existing setup).
-2. Runs `lms load` for the Qwen3-8B model with a 16K context.
+2. Runs `lms load` for `qwen/qwen3.5-9b` with a 16K context, and checks that `LMSTUDIO_API_KEY` is set.
 3. Starts `dnd-assistant run` in a console window that shows the live status.
 
 Ctrl+C ends the session cleanly (section 4.4). The launcher does not switch the PC back to gaming mode afterward. The user's existing toggle handles that.
@@ -186,7 +186,7 @@ The token is generated once and stored outside git. The user enters it in the mo
 ```
 D:\Claude\dnd-assistant\
   pyproject.toml, config.example.toml, README.md
-  src/dnd_assistant/   cli.py, listener.py, hub.py, store.py, scribe.py, timeline.py, glossary.py
+  src/dnd_assistant/   cli.py, runner.py, config.py, listener.py, audio.py, hub.py, pipeline.py, status.py, store.py, scribe.py, timeline.py, session.py, glossary.py
   foundry-module/      module.json, scripts/main.js, lang/en.json
   skills/              dnd/SKILL.md, dnd-recap/SKILL.md   (copied to ~/.claude/skills by an install script)
   scripts/             dnd-mode.ps1, install-skills.ps1
@@ -227,5 +227,5 @@ The repo is pushed to GitHub. Foundry module releases are created from `foundry-
 - **Foundry v14 and dnd5e 6.0.6 internals are unknown** until spike 2. The module's field mapping may need to be adjusted.
 - **The browser's local-network permission prompt** must be allowed, and its exact behavior depends on the browser.
 - **Whisper accuracy** on crosstalk and fantasy names. The glossary helps but won't make it perfect.
-- **Qwen3-8B's quality as a scribe** is untested. A larger model (Qwen3-14B) fits if needed (about 15 GB total, tight). Haiku 5.5 through the API (about 3¢ per session) is a later option.
+- **Qwen3.5-9B's quality as a scribe** is untested. A larger model fits if needed (about 15 GB total, tight). Haiku 5.5 through the API (about 3¢ per session) is a later option.
 - **GitHub hosting:** `gh` is not installed, and the user's GitHub account is not confirmed yet.
