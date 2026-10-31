@@ -1,0 +1,45 @@
+{
+ "hook": "createChatMessage",
+ "at": "2026-10-31T22:44:38.072Z",
+ "message": {
+  "speaker": {
+   "scene": "AP9Z1vMiY8tBf0JL",
+   "token": "tvT1tnSdgTWuAyzJ",
+   "actor": "oMndRwVUp9HhXTpx",
+   "alias": "Paylon"
+  },
+  "content": "<p>Hello there</p>",
+  "style": 2,
+  "_id": "BeCARUeWSO4cCRAM",
+  "type": "base",
+  "system": {},
+  "author": "5kQ6HZxU5PQF7uqO",
+  "timestamp": 1793486676368,
+  "flavor": "",
+  "whisper": [],
+  "blind": false,
+  "rolls": [],
+  "sound": null,
+  "emote": false,
+  "flags": {
+   "core": {
+    "canPopout": true
+   }
+  },
+  "_stats": {
+   "coreVersion": "14.368",
+   "systemId": "dnd5e",
+   "systemVersion": "6.0.6",
+   "createdTime": 1793486676371,
+   "modifiedTime": 1793486676371,
+   "lastModifiedBy": "5kQ6HZxU5PQF7uqO",
+   "compendiumSource": null,
+   "duplicateSource": null,
+   "exportSource": null
+  }
+ },
+ "rolls": [],
+ "visible": true,
+ "speakerAlias": "Paylon",
+ "_synthetic": "Derived from chat-emote: style set to CONST.CHAT_MESSAGE_STYLES.IC (2), content replaced."
+}

@@ -1,0 +1,111 @@
+{
+ "hook": "createChatMessage",
+ "at": "2026-10-31T22:35:28.266Z",
+ "message": {
+  "author": "5kQ6HZxU5PQF7uqO",
+  "content": "15",
+  "sound": "sounds/dice.wav",
+  "speaker": {
+   "scene": "AP9Z1vMiY8tBf0JL",
+   "token": "tvT1tnSdgTWuAyzJ",
+   "actor": "oMndRwVUp9HhXTpx",
+   "alias": "Paylon"
+  },
+  "flavor": "Paylon rolls for Initiative!",
+  "flags": {
+   "core": {
+    "initiativeRoll": true,
+    "canPopout": true
+   }
+  },
+  "rolls": [
+   "{\"class\":\"D20Roll\",\"options\":{\"advantage\":false,\"disadvantage\":false,\"maximum\":null,\"minimum\":null,\"ability\":\"dex\",\"flavor\":\"Initiative\",\"halflingLucky\":false,\"advantageMode\":0,\"configured\":true},\"dice\":[],\"formula\":\"1d20 + 0\",\"terms\":[{\"class\":\"D20Die\",\"options\":{\"flavor\":null,\"elvenAccuracy\":false,\"halflingLucky\":false,\"advantageMode\":0},\"evaluated\":true,\"number\":1,\"faces\":20,\"modifiers\":[],\"results\":[{\"result\":15,\"active\":true}]},{\"class\":\"OperatorTerm\",\"options\":{},\"evaluated\":true,\"operator\":\"+\"},{\"class\":\"NumericTerm\",\"options\":{\"flavor\":null},\"evaluated\":true,\"number\":0}],\"total\":15,\"evaluated\":true}"
+  ],
+  "_id": "6dihtbGPXlYf5lMP",
+  "type": "check",
+  "system": {
+   "ability": "dex",
+   "type": "initiative",
+   "activity": null,
+   "item": null,
+   "origin": null,
+   "targets": [],
+   "skill": null,
+   "tool": null
+  },
+  "style": 0,
+  "timestamp": 1793486126548,
+  "whisper": [],
+  "blind": false,
+  "emote": false,
+  "_stats": {
+   "coreVersion": "14.368",
+   "systemId": "dnd5e",
+   "systemVersion": "6.0.6",
+   "createdTime": 1793486126551,
+   "modifiedTime": 1793486126552,
+   "lastModifiedBy": "5kQ6HZxU5PQF7uqO",
+   "compendiumSource": null,
+   "duplicateSource": null,
+   "exportSource": null
+  }
+ },
+ "rolls": [
+  {
+   "class": "D20Roll",
+   "options": {
+    "advantage": false,
+    "disadvantage": false,
+    "maximum": null,
+    "minimum": null,
+    "ability": "dex",
+    "flavor": "Initiative",
+    "halflingLucky": false,
+    "advantageMode": 0,
+    "configured": true
+   },
+   "dice": [],
+   "formula": "1d20 + 0",
+   "terms": [
+    {
+     "class": "Die",
+     "options": {
+      "flavor": "Initiative",
+      "elvenAccuracy": false,
+      "halflingLucky": false,
+      "advantageMode": 0
+     },
+     "evaluated": true,
+     "number": 1,
+     "faces": 20,
+     "modifiers": [],
+     "results": [
+      {
+       "result": 15,
+       "active": true,
+       "indexThrow": 0
+      }
+     ]
+    },
+    {
+     "class": "OperatorTerm",
+     "options": {},
+     "evaluated": true,
+     "operator": "+"
+    },
+    {
+     "class": "NumericTerm",
+     "options": {
+      "flavor": null
+     },
+     "evaluated": true,
+     "number": 0
+    }
+   ],
+   "total": 15,
+   "evaluated": true
+  }
+ ],
+ "visible": true,
+ "speakerAlias": "Paylon"
+}

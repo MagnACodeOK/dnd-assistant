@@ -1,0 +1,124 @@
+{
+ "hook": "createChatMessage",
+ "at": "2026-10-31T22:31:21.522Z",
+ "message": {
+  "sound": "sounds/dice.wav",
+  "flavor": "Strength (Athletics) Check",
+  "speaker": {
+   "scene": "HcE9IZYIogLBaUz5",
+   "actor": "oMndRwVUp9HhXTpx",
+   "token": null,
+   "alias": "Paylon"
+  },
+  "system": {
+   "ability": "str",
+   "skill": "ath",
+   "activity": null,
+   "item": null,
+   "origin": null,
+   "targets": [],
+   "tool": null,
+   "type": "ability"
+  },
+  "type": "check",
+  "rolls": [
+   "{\"class\":\"D20Roll\",\"options\":{\"maximum\":null,\"minimum\":null,\"advantageMode\":0,\"criticalSuccess\":20,\"criticalFailure\":1,\"configured\":true,\"rollType\":\"check\"},\"dice\":[],\"formula\":\"1d20 + 4 + 6\",\"terms\":[{\"class\":\"Die\",\"options\":{\"flavor\":null,\"elvenAccuracy\":false,\"halflingLucky\":false,\"advantageMode\":0,\"criticalSuccess\":20,\"criticalFailure\":1},\"evaluated\":true,\"number\":1,\"faces\":20,\"modifiers\":[],\"results\":[{\"result\":3,\"active\":true}]},{\"class\":\"OperatorTerm\",\"options\":{},\"evaluated\":true,\"operator\":\"+\"},{\"class\":\"NumericTerm\",\"options\":{\"flavor\":null},\"evaluated\":true,\"number\":4},{\"class\":\"OperatorTerm\",\"options\":{},\"evaluated\":true,\"operator\":\"+\"},{\"class\":\"NumericTerm\",\"options\":{\"flavor\":null},\"evaluated\":true,\"number\":6}],\"total\":13,\"evaluated\":true}"
+  ],
+  "_id": "jzUXOnA0vbOoBiLP",
+  "style": 0,
+  "author": "5kQ6HZxU5PQF7uqO",
+  "timestamp": 1793485879814,
+  "content": "",
+  "whisper": [],
+  "blind": false,
+  "emote": false,
+  "flags": {
+   "core": {
+    "canPopout": true
+   }
+  },
+  "_stats": {
+   "coreVersion": "14.368",
+   "systemId": "dnd5e",
+   "systemVersion": "6.0.6",
+   "createdTime": 1793485879818,
+   "modifiedTime": 1793485879819,
+   "lastModifiedBy": "5kQ6HZxU5PQF7uqO",
+   "compendiumSource": null,
+   "duplicateSource": null,
+   "exportSource": null
+  }
+ },
+ "rolls": [
+  {
+   "class": "D20Roll",
+   "options": {
+    "maximum": null,
+    "minimum": null,
+    "advantageMode": 0,
+    "criticalSuccess": 20,
+    "criticalFailure": 1,
+    "configured": true,
+    "rollType": "check"
+   },
+   "dice": [],
+   "formula": "1d20 + 4 + 6",
+   "terms": [
+    {
+     "class": "Die",
+     "options": {
+      "flavor": null,
+      "elvenAccuracy": false,
+      "halflingLucky": false,
+      "advantageMode": 0,
+      "criticalSuccess": 20,
+      "criticalFailure": 1
+     },
+     "evaluated": true,
+     "number": 1,
+     "faces": 20,
+     "modifiers": [],
+     "results": [
+      {
+       "result": 3,
+       "active": true,
+       "indexThrow": 0
+      }
+     ]
+    },
+    {
+     "class": "OperatorTerm",
+     "options": {},
+     "evaluated": true,
+     "operator": "+"
+    },
+    {
+     "class": "NumericTerm",
+     "options": {
+      "flavor": null
+     },
+     "evaluated": true,
+     "number": 4
+    },
+    {
+     "class": "OperatorTerm",
+     "options": {},
+     "evaluated": true,
+     "operator": "+"
+    },
+    {
+     "class": "NumericTerm",
+     "options": {
+      "flavor": null
+     },
+     "evaluated": true,
+     "number": 6
+    }
+   ],
+   "total": 13,
+   "evaluated": true
+  }
+ ],
+ "visible": true,
+ "speakerAlias": "Paylon"
+}

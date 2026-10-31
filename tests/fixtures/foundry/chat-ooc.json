@@ -1,0 +1,43 @@
+{
+ "hook": "createChatMessage",
+ "at": "2026-10-31T22:30:52.399Z",
+ "message": {
+  "content": "Rules check",
+  "style": 1,
+  "_id": "VvdhXR3QUMibyeYw",
+  "type": "base",
+  "system": {},
+  "author": "5kQ6HZxU5PQF7uqO",
+  "timestamp": 1793485850718,
+  "flavor": "",
+  "speaker": {
+   "scene": null,
+   "actor": null,
+   "token": null
+  },
+  "whisper": [],
+  "blind": false,
+  "rolls": [],
+  "sound": null,
+  "emote": false,
+  "flags": {
+   "core": {
+    "canPopout": true
+   }
+  },
+  "_stats": {
+   "coreVersion": "14.368",
+   "systemId": "dnd5e",
+   "systemVersion": "6.0.6",
+   "createdTime": 1793485850721,
+   "modifiedTime": 1793485850722,
+   "lastModifiedBy": "5kQ6HZxU5PQF7uqO",
+   "compendiumSource": null,
+   "duplicateSource": null,
+   "exportSource": null
+  }
+ },
+ "rolls": [],
+ "visible": true,
+ "speakerAlias": "Wayne"
+}

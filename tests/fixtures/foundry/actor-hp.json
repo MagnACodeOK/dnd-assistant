@@ -1,0 +1,206 @@
+{
+ "hook": "updateActor",
+ "at": "2026-10-31T22:35:44.486Z",
+ "changed": {
+  "system": {
+   "attributes": {
+    "hp": {
+     "temp": 0,
+     "value": 50
+    }
+   }
+  },
+  "_stats": {
+   "modifiedTime": 1793486142744,
+   "lastModifiedBy": "5kQ6HZxU5PQF7uqO"
+  },
+  "_id": "oMndRwVUp9HhXTpx"
+ },
+ "actor": {
+  "name": "Paylon",
+  "system": {
+   "attributes": {
+    "hp": {
+     "max": 58,
+     "temp": 0,
+     "tempmax": 0,
+     "value": 50,
+     "bloodied": 50,
+     "bonuses": {
+      "level": "",
+      "overall": ""
+     },
+     "effectiveMax": 58,
+     "damage": 8,
+     "pct": 86.20689655172413
+    }
+   }
+  },
+  "statuses": [
+   "prone"
+  ],
+  "appliedEffects": [
+   {
+    "name": "Prone"
+   },
+   {
+    "name": "Iron Chin"
+   },
+   {
+    "name": "Cloak of Protection"
+   }
+  ],
+  "items": [
+   {
+    "name": "Moxie",
+    "system": {
+     "uses": {
+      "value": 2,
+      "max": 4,
+      "spent": 2
+     }
+    }
+   },
+   {
+    "name": "Bloodied But Unbowed",
+    "system": {
+     "uses": {
+      "value": 1,
+      "max": 1,
+      "spent": 0
+     }
+    }
+   },
+   {
+    "name": "Swagger Streak",
+    "system": {
+     "uses": {
+      "value": 1,
+      "max": 1,
+      "spent": 0
+     }
+    }
+   },
+   {
+    "name": "Savage Attacker",
+    "system": {
+     "uses": {
+      "value": 1,
+      "max": 1,
+      "spent": 0
+     }
+    }
+   },
+   {
+    "name": "Rations",
+    "system": {
+     "uses": {
+      "value": 1,
+      "max": 1,
+      "spent": 0
+     }
+    }
+   },
+   {
+    "name": "Waterskin",
+    "system": {
+     "uses": {
+      "value": 4,
+      "max": 4,
+      "spent": null
+     }
+    }
+   },
+   {
+    "name": "Potion of Heroism",
+    "system": {
+     "uses": {
+      "value": 1,
+      "max": 1,
+      "spent": 0
+     }
+    }
+   },
+   {
+    "name": "Rations",
+    "system": {
+     "uses": {
+      "value": 1,
+      "max": 1,
+      "spent": 0
+     }
+    }
+   },
+   {
+    "name": "Rope",
+    "system": {
+     "uses": {
+      "value": 1,
+      "max": 1,
+      "spent": 0
+     }
+    }
+   },
+   {
+    "name": "Tinderbox",
+    "system": {
+     "uses": {
+      "value": 1,
+      "max": 1,
+      "spent": 0
+     }
+    }
+   },
+   {
+    "name": "Waterskin",
+    "system": {
+     "uses": {
+      "value": 4,
+      "max": 4,
+      "spent": null
+     }
+    }
+   },
+   {
+    "name": "Healer's Kit",
+    "system": {
+     "uses": {
+      "value": 10,
+      "max": 10,
+      "spent": null
+     }
+    }
+   },
+   {
+    "name": "Climber's Kit",
+    "system": {
+     "uses": {
+      "value": 1,
+      "max": 1,
+      "spent": 0
+     }
+    }
+   },
+   {
+    "name": "Longstrider",
+    "system": {
+     "uses": {
+      "value": 0,
+      "max": 1,
+      "spent": 1
+     }
+    }
+   },
+   {
+    "name": "Pass without Trace",
+    "system": {
+     "uses": {
+      "value": 0,
+      "max": 1,
+      "spent": 1
+     }
+    }
+   }
+  ]
+ }
+}

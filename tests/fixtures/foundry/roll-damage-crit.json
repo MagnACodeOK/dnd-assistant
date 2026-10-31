@@ -1,0 +1,140 @@
+{
+ "hook": "createChatMessage",
+ "at": "2026-10-31T22:32:08.122Z",
+ "message": {
+  "sound": "sounds/dice.wav",
+  "flavor": "Blood Spear - Damage Roll",
+  "speaker": {
+   "scene": "HcE9IZYIogLBaUz5",
+   "actor": "oMndRwVUp9HhXTpx",
+   "token": null,
+   "alias": "Paylon"
+  },
+  "system": {
+   "activity": {
+    "id": "attackBloodSpear",
+    "img": "systems/dnd5e/icons/svg/activity/attack.svg",
+    "name": "Attack",
+    "type": "attack",
+    "uuid": "Actor.oMndRwVUp9HhXTpx.Item.ogIMi5DpG57WOZby.Activity.attackBloodSpear"
+   },
+   "item": {
+    "compendiumSource": null,
+    "id": "ogIMi5DpG57WOZby",
+    "img": "icons/weapons/polearms/spear-flared-wrapped.webp",
+    "name": "Blood Spear",
+    "type": "weapon",
+    "uuid": "Actor.oMndRwVUp9HhXTpx.Item.ogIMi5DpG57WOZby"
+   },
+   "targets": [],
+   "origin": "3xfMiLBULfGGJHRd",
+   "onSave": null
+  },
+  "type": "damage",
+  "rolls": [
+   "{\"class\":\"DamageRoll\",\"options\":{\"type\":\"piercing\",\"types\":[\"piercing\"],\"properties\":[\"mgc\"],\"isCritical\":false,\"critical\":{\"multiplyNumeric\":false,\"powerfulCritical\":false},\"preprocessed\":true,\"configured\":true,\"rollType\":\"damage\",\"originatingMessage\":\"3xfMiLBULfGGJHRd\"},\"dice\":[],\"formula\":\"1d10 + 4 + 2\",\"terms\":[{\"class\":\"BasicDie\",\"options\":{\"flavor\":null},\"evaluated\":true,\"number\":1,\"faces\":10,\"modifiers\":[],\"results\":[{\"result\":10,\"active\":true}]},{\"class\":\"OperatorTerm\",\"options\":{},\"evaluated\":true,\"operator\":\"+\"},{\"class\":\"NumericTerm\",\"options\":{\"flavor\":null},\"evaluated\":true,\"number\":4},{\"class\":\"OperatorTerm\",\"options\":{},\"evaluated\":true,\"operator\":\"+\"},{\"class\":\"NumericTerm\",\"options\":{\"flavor\":null},\"evaluated\":true,\"number\":2}],\"total\":16,\"evaluated\":true}"
+  ],
+  "_id": "Ut5oROz9KxrcvTn1",
+  "style": 0,
+  "author": "5kQ6HZxU5PQF7uqO",
+  "timestamp": 1793485926416,
+  "content": "",
+  "whisper": [],
+  "blind": false,
+  "emote": false,
+  "flags": {
+   "core": {
+    "canPopout": true
+   }
+  },
+  "_stats": {
+   "coreVersion": "14.368",
+   "systemId": "dnd5e",
+   "systemVersion": "6.0.6",
+   "createdTime": 1793485926420,
+   "modifiedTime": 1793485926421,
+   "lastModifiedBy": "5kQ6HZxU5PQF7uqO",
+   "compendiumSource": null,
+   "duplicateSource": null,
+   "exportSource": null
+  }
+ },
+ "rolls": [
+  {
+   "class": "DamageRoll",
+   "options": {
+    "type": "piercing",
+    "types": [
+     "piercing"
+    ],
+    "properties": [
+     "mgc"
+    ],
+    "isCritical": true,
+    "critical": {
+     "multiplyNumeric": false,
+     "powerfulCritical": false
+    },
+    "preprocessed": true,
+    "configured": true,
+    "rollType": "damage",
+    "originatingMessage": "3xfMiLBULfGGJHRd"
+   },
+   "dice": [],
+   "formula": "1d10 + 4 + 2",
+   "terms": [
+    {
+     "class": "BasicDie",
+     "options": {
+      "flavor": null,
+      "type": "piercing"
+     },
+     "evaluated": true,
+     "number": 1,
+     "faces": 10,
+     "modifiers": [],
+     "results": [
+      {
+       "result": 10,
+       "active": true,
+       "indexThrow": 0
+      }
+     ]
+    },
+    {
+     "class": "OperatorTerm",
+     "options": {},
+     "evaluated": true,
+     "operator": "+"
+    },
+    {
+     "class": "NumericTerm",
+     "options": {
+      "flavor": null
+     },
+     "evaluated": true,
+     "number": 4
+    },
+    {
+     "class": "OperatorTerm",
+     "options": {},
+     "evaluated": true,
+     "operator": "+"
+    },
+    {
+     "class": "NumericTerm",
+     "options": {
+      "flavor": null
+     },
+     "evaluated": true,
+     "number": 2
+    }
+   ],
+   "total": 16,
+   "evaluated": true
+  }
+ ],
+ "visible": true,
+ "speakerAlias": "Paylon",
+ "_synthetic": "Derived from roll-damage: options.isCritical set to true (dice unchanged)."
+}

@@ -1,0 +1,157 @@
+{
+ "hook": "createChatMessage",
+ "at": "2026-10-31T22:31:54.327Z",
+ "message": {
+  "sound": "sounds/dice.wav",
+  "flavor": "Blood Spear - Attack Roll",
+  "speaker": {
+   "scene": "HcE9IZYIogLBaUz5",
+   "actor": "oMndRwVUp9HhXTpx",
+   "token": null,
+   "alias": "Paylon"
+  },
+  "system": {
+   "activity": {
+    "id": "attackBloodSpear",
+    "img": "systems/dnd5e/icons/svg/activity/attack.svg",
+    "name": "Attack",
+    "type": "attack",
+    "uuid": "Actor.oMndRwVUp9HhXTpx.Item.ogIMi5DpG57WOZby.Activity.attackBloodSpear"
+   },
+   "item": {
+    "compendiumSource": null,
+    "id": "ogIMi5DpG57WOZby",
+    "img": "icons/weapons/polearms/spear-flared-wrapped.webp",
+    "name": "Blood Spear",
+    "type": "weapon",
+    "uuid": "Actor.oMndRwVUp9HhXTpx.Item.ogIMi5DpG57WOZby"
+   },
+   "targets": [],
+   "origin": "3xfMiLBULfGGJHRd",
+   "ability": "str",
+   "mode": "oneHanded",
+   "ammunition": null,
+   "deltas": null,
+   "mastery": null
+  },
+  "type": "attack",
+  "rolls": [
+   "{\"class\":\"D20Roll\",\"options\":{\"maximum\":null,\"minimum\":null,\"advantage\":false,\"disadvantage\":false,\"attackMode\":\"oneHanded\",\"criticalSuccess\":20,\"advantageMode\":0,\"ability\":\"str\",\"criticalFailure\":1,\"configured\":true,\"rollType\":\"attack\",\"originatingMessage\":\"3xfMiLBULfGGJHRd\"},\"dice\":[],\"formula\":\"1d20 + 4 + 3 + 2\",\"terms\":[{\"class\":\"Die\",\"options\":{\"flavor\":null,\"elvenAccuracy\":false,\"halflingLucky\":false,\"advantageMode\":0,\"criticalSuccess\":20,\"criticalFailure\":1},\"evaluated\":true,\"number\":1,\"faces\":20,\"modifiers\":[],\"results\":[{\"result\":13,\"active\":true}]},{\"class\":\"OperatorTerm\",\"options\":{},\"evaluated\":true,\"operator\":\"+\"},{\"class\":\"NumericTerm\",\"options\":{\"flavor\":null},\"evaluated\":true,\"number\":4},{\"class\":\"OperatorTerm\",\"options\":{},\"evaluated\":true,\"operator\":\"+\"},{\"class\":\"NumericTerm\",\"options\":{\"flavor\":null},\"evaluated\":true,\"number\":3},{\"class\":\"OperatorTerm\",\"options\":{},\"evaluated\":true,\"operator\":\"+\"},{\"class\":\"NumericTerm\",\"options\":{\"flavor\":null},\"evaluated\":true,\"number\":2}],\"total\":22,\"evaluated\":true}"
+  ],
+  "_id": "m7XlgsM9oZX4AAHs",
+  "style": 0,
+  "author": "5kQ6HZxU5PQF7uqO",
+  "timestamp": 1793485912623,
+  "content": "",
+  "whisper": [],
+  "blind": false,
+  "emote": false,
+  "flags": {
+   "core": {
+    "canPopout": true
+   }
+  },
+  "_stats": {
+   "coreVersion": "14.368",
+   "systemId": "dnd5e",
+   "systemVersion": "6.0.6",
+   "createdTime": 1793485912626,
+   "modifiedTime": 1793485912627,
+   "lastModifiedBy": "5kQ6HZxU5PQF7uqO",
+   "compendiumSource": null,
+   "duplicateSource": null,
+   "exportSource": null
+  }
+ },
+ "rolls": [
+  {
+   "class": "D20Roll",
+   "options": {
+    "maximum": null,
+    "minimum": null,
+    "advantage": false,
+    "disadvantage": false,
+    "attackMode": "oneHanded",
+    "criticalSuccess": 20,
+    "advantageMode": 0,
+    "ability": "str",
+    "criticalFailure": 1,
+    "configured": true,
+    "rollType": "attack",
+    "originatingMessage": "3xfMiLBULfGGJHRd"
+   },
+   "dice": [],
+   "formula": "1d20 + 4 + 3 + 2",
+   "terms": [
+    {
+     "class": "Die",
+     "options": {
+      "flavor": null,
+      "elvenAccuracy": false,
+      "halflingLucky": false,
+      "advantageMode": 0,
+      "criticalSuccess": 20,
+      "criticalFailure": 1
+     },
+     "evaluated": true,
+     "number": 1,
+     "faces": 20,
+     "modifiers": [],
+     "results": [
+      {
+       "result": 13,
+       "active": true,
+       "indexThrow": 0
+      }
+     ]
+    },
+    {
+     "class": "OperatorTerm",
+     "options": {},
+     "evaluated": true,
+     "operator": "+"
+    },
+    {
+     "class": "NumericTerm",
+     "options": {
+      "flavor": null
+     },
+     "evaluated": true,
+     "number": 4
+    },
+    {
+     "class": "OperatorTerm",
+     "options": {},
+     "evaluated": true,
+     "operator": "+"
+    },
+    {
+     "class": "NumericTerm",
+     "options": {
+      "flavor": null
+     },
+     "evaluated": true,
+     "number": 3
+    },
+    {
+     "class": "OperatorTerm",
+     "options": {},
+     "evaluated": true,
+     "operator": "+"
+    },
+    {
+     "class": "NumericTerm",
+     "options": {
+      "flavor": null
+     },
+     "evaluated": true,
+     "number": 2
+    }
+   ],
+   "total": 22,
+   "evaluated": true
+  }
+ ],
+ "visible": true,
+ "speakerAlias": "Paylon"
+}

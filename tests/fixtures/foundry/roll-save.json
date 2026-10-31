@@ -1,0 +1,144 @@
+{
+ "hook": "createChatMessage",
+ "at": "2026-10-31T22:32:24.243Z",
+ "message": {
+  "sound": "sounds/dice.wav",
+  "flavor": "Strength Saving Throw",
+  "speaker": {
+   "scene": "HcE9IZYIogLBaUz5",
+   "actor": "oMndRwVUp9HhXTpx",
+   "token": null,
+   "alias": "Paylon"
+  },
+  "type": "save",
+  "system": {
+   "ability": "str",
+   "activity": null,
+   "item": null,
+   "origin": null,
+   "targets": [],
+   "deltas": {
+    "actor": [],
+    "item": {}
+   },
+   "outcome": null,
+   "resisted": false,
+   "type": "ability"
+  },
+  "rolls": [
+   "{\"class\":\"D20Roll\",\"options\":{\"advantage\":false,\"disadvantage\":false,\"maximum\":null,\"minimum\":null,\"advantageMode\":0,\"criticalSuccess\":20,\"criticalFailure\":1,\"configured\":true,\"rollType\":\"save\"},\"dice\":[],\"formula\":\"1d20 + 4 + 3 + 1\",\"terms\":[{\"class\":\"Die\",\"options\":{\"flavor\":null,\"elvenAccuracy\":false,\"halflingLucky\":false,\"advantageMode\":0,\"criticalSuccess\":20,\"criticalFailure\":1},\"evaluated\":true,\"number\":1,\"faces\":20,\"modifiers\":[],\"results\":[{\"result\":4,\"active\":true}]},{\"class\":\"OperatorTerm\",\"options\":{},\"evaluated\":true,\"operator\":\"+\"},{\"class\":\"NumericTerm\",\"options\":{\"flavor\":null},\"evaluated\":true,\"number\":4},{\"class\":\"OperatorTerm\",\"options\":{},\"evaluated\":true,\"operator\":\"+\"},{\"class\":\"NumericTerm\",\"options\":{\"flavor\":null},\"evaluated\":true,\"number\":3},{\"class\":\"OperatorTerm\",\"options\":{},\"evaluated\":true,\"operator\":\"+\"},{\"class\":\"NumericTerm\",\"options\":{\"flavor\":null},\"evaluated\":true,\"number\":1}],\"total\":12,\"evaluated\":true}"
+  ],
+  "_id": "d6uAgnfkQg3oianL",
+  "style": 0,
+  "author": "5kQ6HZxU5PQF7uqO",
+  "timestamp": 1793485942537,
+  "content": "",
+  "whisper": [],
+  "blind": false,
+  "emote": false,
+  "flags": {
+   "core": {
+    "canPopout": true
+   }
+  },
+  "_stats": {
+   "coreVersion": "14.368",
+   "systemId": "dnd5e",
+   "systemVersion": "6.0.6",
+   "createdTime": 1793485942541,
+   "modifiedTime": 1793485942542,
+   "lastModifiedBy": "5kQ6HZxU5PQF7uqO",
+   "compendiumSource": null,
+   "duplicateSource": null,
+   "exportSource": null
+  }
+ },
+ "rolls": [
+  {
+   "class": "D20Roll",
+   "options": {
+    "advantage": false,
+    "disadvantage": false,
+    "maximum": null,
+    "minimum": null,
+    "advantageMode": 0,
+    "criticalSuccess": 20,
+    "criticalFailure": 1,
+    "configured": true,
+    "rollType": "save"
+   },
+   "dice": [],
+   "formula": "1d20 + 4 + 3 + 1",
+   "terms": [
+    {
+     "class": "Die",
+     "options": {
+      "flavor": null,
+      "elvenAccuracy": false,
+      "halflingLucky": false,
+      "advantageMode": 0,
+      "criticalSuccess": 20,
+      "criticalFailure": 1
+     },
+     "evaluated": true,
+     "number": 1,
+     "faces": 20,
+     "modifiers": [],
+     "results": [
+      {
+       "result": 4,
+       "active": true,
+       "indexThrow": 0
+      }
+     ]
+    },
+    {
+     "class": "OperatorTerm",
+     "options": {},
+     "evaluated": true,
+     "operator": "+"
+    },
+    {
+     "class": "NumericTerm",
+     "options": {
+      "flavor": null
+     },
+     "evaluated": true,
+     "number": 4
+    },
+    {
+     "class": "OperatorTerm",
+     "options": {},
+     "evaluated": true,
+     "operator": "+"
+    },
+    {
+     "class": "NumericTerm",
+     "options": {
+      "flavor": null
+     },
+     "evaluated": true,
+     "number": 3
+    },
+    {
+     "class": "OperatorTerm",
+     "options": {},
+     "evaluated": true,
+     "operator": "+"
+    },
+    {
+     "class": "NumericTerm",
+     "options": {
+      "flavor": null
+     },
+     "evaluated": true,
+     "number": 1
+    }
+   ],
+   "total": 12,
+   "evaluated": true
+  }
+ ],
+ "visible": true,
+ "speakerAlias": "Paylon"
+}

@@ -1,0 +1,16 @@
+{
+ "hook": "updateCombat",
+ "at": "2026-10-31T22:46:01.643Z",
+ "changed": {
+  "round": 1,
+  "turn": 0,
+  "_stats": {
+   "modifiedTime": 1793486759940
+  },
+  "_id": "JLXENEXsfzy8cHWA"
+ },
+ "round": 1,
+ "turn": 0,
+ "combatantName": "Count Strahd von Zarovich",
+ "started": true
+}

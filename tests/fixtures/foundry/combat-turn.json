@@ -1,0 +1,15 @@
+{
+ "hook": "updateCombat",
+ "at": "2026-10-31T22:46:05.462Z",
+ "changed": {
+  "turn": 2,
+  "_stats": {
+   "modifiedTime": 1793486763760
+  },
+  "_id": "JLXENEXsfzy8cHWA"
+ },
+ "round": 1,
+ "turn": 2,
+ "combatantName": "Paylon",
+ "started": true
+}
