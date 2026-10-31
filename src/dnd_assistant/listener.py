@@ -18,11 +18,23 @@ from .store import Event
 
 RATE = 16000
 SILENT_WARN_S = 600
+# PortAudio crashes natively when two threads initialize or open streams at the same time,
+# so every PortAudio setup/teardown call goes through this lock.
+PORTAUDIO_LOCK = threading.Lock()
 Handle = Callable[[Event], int]
 
 
 def _now() -> datetime:
     return datetime.now().astimezone()
+
+
+def _init_com() -> None:
+    """WASAPI needs COM on every thread that opens a stream, but PortAudio initializes it only
+    on the first thread to call Pa_Initialize. Safe to call repeatedly."""
+    if os.name == "nt":
+        import ctypes
+
+        ctypes.windll.ole32.CoInitializeEx(None, 0)  # COINIT_MULTITHREADED
 
 
 def find_device(pa, name: str, loopback: bool) -> dict:
@@ -60,7 +72,17 @@ class AudioSource:
     def open(self) -> None:
         import pyaudiowpatch as pyaudio
 
-        self._pa = pyaudio.PyAudio()
+        _init_com()
+        with PORTAUDIO_LOCK:
+            self._pa = pyaudio.PyAudio()
+            try:
+                self._open_stream(pyaudio)
+            except Exception:
+                self._pa.terminate()
+                self._pa = None
+                raise
+
+    def _open_stream(self, pyaudio) -> None:
         dev = find_device(self._pa, self.device_name, self.loopback)
         channels, rate = dev["maxInputChannels"], int(dev["defaultSampleRate"])
         frames_wanted = int(rate * self.chunk_s)
@@ -92,12 +114,13 @@ class AudioSource:
             raise RuntimeError("stream stopped")
 
     def close(self) -> None:
-        for action in (lambda: self._stream.stop_stream(), lambda: self._stream.close(), lambda: self._pa.terminate()):
-            try:
-                action()
-            except Exception:
-                pass
-        self._stream = self._pa = None
+        with PORTAUDIO_LOCK:
+            for action in (lambda: self._stream.stop_stream(), lambda: self._stream.close(), lambda: self._pa.terminate()):
+                try:
+                    action()
+                except Exception:
+                    pass
+            self._stream = self._pa = None
 
 
 class CaptureWorker(threading.Thread):

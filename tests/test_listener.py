@@ -192,6 +192,56 @@ def test_transcribe_error_warns_and_continues():
     assert events == [] and "whisper" in status.warnings
 
 
+# --- PortAudio thread safety -----------------------------------------------------------------
+
+def test_audio_source_serializes_portaudio_calls(monkeypatch):
+    """PortAudio crashes natively when two threads open streams at once (seen live)."""
+    import pyaudiowpatch
+
+    from dnd_assistant import listener
+
+    held = []
+
+    class Stream:
+        def is_active(self):
+            return True
+
+        def stop_stream(self):
+            held.append(("stop", listener.PORTAUDIO_LOCK.locked()))
+
+        def close(self):
+            held.append(("close", listener.PORTAUDIO_LOCK.locked()))
+
+    class PA:
+        def __init__(self):
+            held.append(("init", listener.PORTAUDIO_LOCK.locked()))
+
+        def get_loopback_device_info_generator(self):
+            return iter([{"index": 3, "name": "SteelSeries Sonar - Chat [Loopback]",
+                          "maxInputChannels": 2, "defaultSampleRate": 48000}])
+
+        def open(self, **kw):
+            held.append(("open", listener.PORTAUDIO_LOCK.locked()))
+            return Stream()
+
+        def terminate(self):
+            held.append(("terminate", listener.PORTAUDIO_LOCK.locked()))
+
+    monkeypatch.setattr(pyaudiowpatch, "PyAudio", PA)
+    com_threads = []
+    monkeypatch.setattr(listener, "_init_com", lambda: com_threads.append(threading.get_ident()))
+    source = listener.AudioSource("SteelSeries Sonar - Chat", loopback=True)
+    opener = threading.Thread(target=source.open)
+    opener.start()
+    opener.join()
+    source.close()
+    assert [name for name, _ in held] == ["init", "open", "stop", "close", "terminate"]
+    assert all(locked for _, locked in held)
+    # WASAPI needs COM on each thread that opens a stream; PortAudio only sets it up on the
+    # first thread to initialize it (seen live: "Unanticipated host error" on the second device).
+    assert com_threads == [opener.ident]
+
+
 # --- device lookup ---------------------------------------------------------------------------
 
 class FakePA:
