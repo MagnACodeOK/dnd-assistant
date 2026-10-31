@@ -22,6 +22,10 @@ function actorSummary(actor) {
     hp: actor?.system?.attributes?.hp,
     statuses: Array.from(actor?.statuses ?? []),
     effects: (actor?.appliedEffects ?? []).map((e) => e.name),
+    // Prepared (not source) values: limited-use features such as Moxie live here.
+    uses: (actor?.items ?? [])
+      .filter((i) => i.system?.uses?.max)
+      .map((i) => ({ name: i.name, value: i.system.uses.value, max: i.system.uses.max, spent: i.system.uses.spent })),
   };
 }
 
@@ -61,6 +65,10 @@ for (const hook of ["combatStart", "deleteCombat"]) {
 
 Hooks.on("updateActor", (actor, changed) => {
   record("updateActor", { changed, ...actorSummary(actor) });
+});
+
+Hooks.on("updateItem", (item, changed) => {
+  record("updateItem", { itemName: item.name, changed, ...actorSummary(item.parent) });
 });
 
 for (const hook of ["createActiveEffect", "deleteActiveEffect"]) {
