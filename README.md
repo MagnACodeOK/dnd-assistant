@@ -17,7 +17,8 @@ Design: `docs/superpowers/specs/2026-10-28-dnd-table-assistant-design.md`.
    This also installs the CUDA 12 cuBLAS and cuDNN 9 libraries that faster-whisper needs on the GPU.
 3. Copy `config.example.toml` to `config.toml` and set `foundry_origins` to your Foundry URL.
 4. Set the user environment variable `LMSTUDIO_API_KEY` to LM Studio's API token (do this yourself; never paste it into chat).
-5. Run the tests:
+5. Route Discord to the Chat channel: in Windows **Settings → System → Sound → Volume mixer**, set Discord's output device to **SteelSeries Sonar - Chat**, and leave Discord's own Output Device on Default. Discord's dropdown names every Sonar device "SteelSeries Sonar Virtual Audio Device", so it's easy to pick the wrong one there. The table transcript is a loopback of Sonar - Chat, and browser music stays on Sonar - Gaming.
+6. Run the tests:
 
    ```powershell
    uv run pytest
