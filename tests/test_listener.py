@@ -61,7 +61,8 @@ def capture(sources, clock=None, poll_s=0.5, retry_s=0.0):
 
 def test_watchdog_flushes_sentence_when_source_goes_silent():
     speech = np.ones(RATE, dtype=np.float32)
-    worker, out, _, _ = capture([FakeSource([(speech, T0)])], poll_s=0.05)
+    start = datetime.now().astimezone() - timedelta(seconds=1)
+    worker, out, _, _ = capture([FakeSource([(speech, start)])], clock=lambda: datetime.now().astimezone(), poll_s=0.05)
     worker.start()
     try:
         speaker, segment = out.get(timeout=3)  # 0.6 s of zeros fed in by the watchdog, in 0.05 s steps
@@ -69,8 +70,89 @@ def test_watchdog_flushes_sentence_when_source_goes_silent():
         worker.stop.set()
         worker.join(timeout=3)
     assert speaker == "Table"
-    assert segment.start == T0
+    assert segment.start == start
     assert int((segment.audio != 0).sum()) == RATE
+
+
+class SpySegmenter(Segmenter):
+    def __init__(self):
+        super().__init__(fake_detect)
+        self.fed = []
+
+    def feed(self, chunk, chunk_start):
+        self.fed.append((len(chunk), chunk_start, bool(chunk.any())))
+        return super().feed(chunk, chunk_start)
+
+
+def spy_capture(source, clock):
+    out, events, status = queue.Queue(), [], Status()
+    seg = SpySegmenter()
+    worker = CaptureWorker(lambda: source, "Table", seg, out, lambda e: events.append(e) or 1, status,
+                           threading.Event(), now=clock, poll_s=0.01, retry_s=0.0)
+    return worker, seg, out
+
+
+def test_no_silence_inserted_while_source_streams():
+    """Chunks arrive every ~0.512 s, a bit slower than the poll: a late chunk must not be
+    mistaken for silence (live bug: inserted zeros pushed timestamps minutes ahead)."""
+    clock = Clock()
+    source = FakeSource()
+    worker, seg, _ = spy_capture(source, clock)
+    t = T0
+    for _ in range(5):
+        source.queue.put((np.ones(8192, dtype=np.float32), t))
+        worker.step()
+        t += timedelta(seconds=8192 / RATE)
+        clock.t = t + timedelta(seconds=0.5)  # poll times out before the next chunk
+        worker.step()
+    assert all(nonzero for _, _, nonzero in seg.fed)
+    assert sum(n for n, _, _ in seg.fed) == 5 * 8192
+
+
+def test_gap_before_chunk_is_filled_so_times_stay_real():
+    clock = Clock()
+    source = FakeSource([
+        (np.ones(RATE, dtype=np.float32), T0),
+        (np.zeros(RATE, dtype=np.float32), T0 + timedelta(seconds=1)),
+        (np.ones(RATE, dtype=np.float32), T0 + timedelta(seconds=2.5)),
+        (np.zeros(RATE, dtype=np.float32), T0 + timedelta(seconds=3.5)),
+    ])
+    worker, _, out = spy_capture(source, clock)
+    for _ in range(4):
+        worker.step()
+    starts = [s.start for _, s in list(out.queue)]
+    assert starts == [T0, T0 + timedelta(seconds=2.5) - timedelta(seconds=0.2)]
+
+
+def test_long_gap_reanchors_to_real_time():
+    clock = Clock()
+    source = FakeSource([
+        (np.ones(RATE, dtype=np.float32), T0),
+        (np.ones(RATE, dtype=np.float32), T0 + timedelta(minutes=5)),
+        (np.zeros(RATE, dtype=np.float32), T0 + timedelta(minutes=5, seconds=1)),
+    ])
+    worker, seg, out = spy_capture(source, clock)
+    for _ in range(3):
+        worker.step()
+    starts = [s.start for _, s in list(out.queue)]
+    assert starts == [T0, T0 + timedelta(minutes=5)]
+    assert sum(n for n, _, nonzero in seg.fed if not nonzero) < 3 * RATE  # no 5 minutes of zeros
+
+
+def test_watchdog_fills_only_real_elapsed_time():
+    clock = Clock()
+    source = FakeSource([(np.ones(RATE, dtype=np.float32), T0)])
+    worker, seg, out = spy_capture(source, clock)
+    worker.step()
+    clock.t = T0 + timedelta(seconds=1.5)  # only 0.5 s since the chunk ended: too soon to call it silence
+    worker.step()
+    assert len(seg.fed) == 1
+    clock.t = T0 + timedelta(seconds=2.5)
+    worker.step()
+    filled = seg.fed[1]
+    assert filled[1] == T0 + timedelta(seconds=1) and not filled[2]
+    assert filled[0] == int(1.25 * RATE)  # up to now - 0.25 s
+    assert out.qsize() == 1
 
 
 def test_source_error_emits_gap_and_reopens():

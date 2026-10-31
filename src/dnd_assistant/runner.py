@@ -5,6 +5,7 @@ from __future__ import annotations
 import asyncio
 import os
 import queue
+import shutil
 import sys
 import threading
 import time
@@ -137,7 +138,9 @@ def run(cfg: Config, new: bool = False, keep_audio: bool = False) -> int:
                     s.refresh_glossary()
                     last_glossary = time.monotonic()
                 s.check_foundry()
-                sys.stdout.write("\r" + s.status.line().ljust(120))
+                # Emoji take two columns in most consoles, so leave room for them.
+                width = shutil.get_terminal_size().columns - 8
+                sys.stdout.write("\r" + s.status.line(width).ljust(width))
                 sys.stdout.flush()
         finally:
             await runner.cleanup()

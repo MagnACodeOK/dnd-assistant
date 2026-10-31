@@ -23,9 +23,13 @@ class Status:
         with self._lock:
             self.warnings.pop(key, None)
 
-    def line(self) -> str:
+    def line(self, width: int | None = None) -> str:
+        """The status line; with `width`, cut to fit so a console `\\r` can overwrite it."""
         with self._lock:
             notes = self.notes_at.strftime("%H:%M") if self.notes_at else "—"
             parts = [f"🎙 {self.speech} lines", f"🎲 {self.foundry} Foundry events", f"✍ notes {notes}"]
             parts += [f"⚠ {msg}" for msg in self.warnings.values()]
-        return " · ".join(parts)
+        line = " · ".join(parts)
+        if width is not None and len(line) > width:
+            line = line[: width - 1] + "…"
+        return line

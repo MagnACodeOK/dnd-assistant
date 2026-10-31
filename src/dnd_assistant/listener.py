@@ -18,6 +18,10 @@ from .store import Event
 
 RATE = 16000
 SILENT_WARN_S = 600
+WATCHDOG_AFTER_S = 1.0  # quiet this long before the watchdog fills silence
+WATCHDOG_LAG_S = 0.25  # fill only up to this far behind the clock
+MIN_GAP_S = 0.02  # chunk timing jitter below this is ignored
+MAX_FILL_S = 2.0  # longer gaps re-anchor instead of being filled
 # PortAudio crashes natively when two threads initialize or open streams at the same time,
 # so every PortAudio setup/teardown call goes through this lock.
 PORTAUDIO_LOCK = threading.Lock()
@@ -163,15 +167,21 @@ class CaptureWorker(threading.Thread):
             try:
                 item = self.source.queue.get(timeout=self.poll_s)
             except queue.Empty:
-                # Silence watchdog: loopback sends nothing when Discord goes quiet, so feed zeros
-                # to let a sentence that was mid-segment close after the usual pause.
+                # Silence watchdog: loopback sends nothing when Discord goes quiet, so once the
+                # source has been quiet for a while, fill the real elapsed time with zeros to let
+                # a sentence that was mid-segment close. Never fill ahead of the clock: chunks
+                # arrive every ~0.5 s, and zeros that overlap real audio skew every timestamp.
                 self.source.check()
-                item = (np.zeros(int(self.poll_s * RATE), dtype=np.float32), self._next_ts or self.now())
-            if isinstance(item, Exception):
-                raise item
-            chunk, ts = item
-            self._next_ts = ts + timedelta(seconds=len(chunk) / RATE)
-            segments = self.segmenter.feed(chunk, ts)
+                segments = []
+                if self._next_ts and (self.now() - self._next_ts).total_seconds() > WATCHDOG_AFTER_S:
+                    segments = self._advance_to(self.now() - timedelta(seconds=WATCHDOG_LAG_S))
+            else:
+                if isinstance(item, Exception):
+                    raise item
+                chunk, ts = item
+                segments = self._advance_to(ts)
+                segments += self.segmenter.feed(chunk, ts)
+                self._next_ts = ts + timedelta(seconds=len(chunk) / RATE)
         except Exception as err:
             self._lost(err)
             return
@@ -183,6 +193,24 @@ class CaptureWorker(threading.Thread):
                 self.out.put((self.speaker, segment))
         elif self._last_speech and (now - self._last_speech).total_seconds() > SILENT_WARN_S:
             self.status.warn(f"silent-{self.speaker}", f"{self.speaker} silent for 10+ min")
+
+    def _advance_to(self, t: datetime) -> list[Segment]:
+        """Feed silence from the end of the audio so far up to real time `t`, so the segmenter's
+        sample clock stays on the wall clock. After a long gap, close any pending segment and
+        let the next chunk re-anchor the timeline instead of feeding minutes of zeros."""
+        if self._next_ts is None:
+            return []
+        gap = (t - self._next_ts).total_seconds()
+        if gap <= MIN_GAP_S:
+            return []
+        if gap <= MAX_FILL_S:
+            segments = self.segmenter.feed(np.zeros(int(gap * RATE), dtype=np.float32), self._next_ts)
+            self._next_ts = t
+            return segments
+        segments = self.segmenter.feed(np.zeros(RATE, dtype=np.float32), self._next_ts)
+        segments += self.segmenter.flush()
+        self._next_ts = None
+        return segments
 
     def _lost(self, err: Exception) -> None:
         self.handle(Event(ts=self.now(), source="system", kind="gap", speaker=self.speaker,

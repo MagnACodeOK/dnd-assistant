@@ -68,6 +68,14 @@ def test_status_line_format():
     assert s.line().endswith("✍ notes 21:40 · ⚠ Table silent 10 min")
 
 
+def test_status_line_fits_width():
+    s = Status()
+    s.warn("scribe", "scribe skipped: LM Studio 401: is LMSTUDIO_API_KEY set? " * 3)
+    line = s.line(width=80)
+    assert len(line) <= 80 and line.endswith("…")
+    assert s.line(width=500) == s.line()
+
+
 def test_handle_from_threads(parts):
     pipe, store, status, tmp = parts
 
