@@ -118,6 +118,34 @@ test("only one retry is scheduled while sends keep arriving during an outage", a
   assert.equal(timers.pending.length, 1);
 });
 
+test("retry timer is called the way browsers require (no `this` binding)", async () => {
+  // window.setTimeout throws "Illegal invocation" when called with another object as `this`;
+  // Node's doesn't, which hid this in the first live test (queued rolls never retried).
+  const net = fakeNetwork();
+  const scheduled = [];
+  function browserSetTimeout(fn, ms) {
+    if (this !== undefined && this !== globalThis) throw new TypeError("Illegal invocation");
+    scheduled.push({ fn, ms });
+  }
+  const { sender } = makeSender(net, fakeTimers(), { setTimeoutFn: browserSetTimeout });
+  net.down = true;
+  await sender.send(ev(1));
+  assert.equal(scheduled.length, 1);
+  net.down = false;
+  await scheduled[0].fn();
+  assert.equal(sender.queue.length, 0);
+});
+
+test("default timer works with no injected setTimeoutFn", async () => {
+  const net = fakeNetwork();
+  const sender = new Sender({ fetchFn: net.fetchFn, url: "u", token: "t", notify: () => {} });
+  net.down = true;
+  await sender.send(ev(1));
+  net.down = false;
+  await new Promise((resolve) => setTimeout(resolve, 1100));
+  assert.equal(sender.queue.length, 0);
+});
+
 test("a rejected event (400) is dropped, not retried forever", async () => {
   const net = fakeNetwork();
   const timers = fakeTimers();

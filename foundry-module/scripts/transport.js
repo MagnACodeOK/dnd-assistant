@@ -81,7 +81,9 @@ export class Sender {
     this.retryScheduled = true;
     const delay = this.backoffMs;
     this.backoffMs = Math.min(this.backoffMs * 2, MAX_BACKOFF_MS);
-    this.setTimeoutFn(async () => {
+    // Call unbound: window.setTimeout throws "Illegal invocation" with any other `this`.
+    const setTimeoutFn = this.setTimeoutFn;
+    setTimeoutFn(async () => {
       this.retryScheduled = false;
       await this.flush();
     }, delay);
