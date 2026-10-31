@@ -1,0 +1,7 @@
+.venv/
+config.toml
+__pycache__/
+*.wav
+!tests/fixtures/**/*.wav
+foundry-module/dist/
+.pytest_cache/

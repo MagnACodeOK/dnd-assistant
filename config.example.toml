@@ -1,0 +1,29 @@
+# Copy to config.toml (git-ignored) and fill in foundry_origins.
+
+# The Curse of Strahd campaign folder in the Obsidian vault.
+campaign = 'C:\Dropbox\Claude Vora\Claude_Vora\Curse of Strahd'
+
+# Origin(s) of the Foundry page in your browser, e.g. "https://foundry.example.com:30000".
+foundry_origins = ["<your Foundry URL>"]
+
+# Audio devices (matched by substring). Table = loopback of the Chat device.
+chat_device = "SteelSeries Sonar - Chat"
+mic_device = "SteelSeries Sonar - Microphone"
+
+# Hub (binds 127.0.0.1 only). The token lives outside the repo.
+port = 8765
+token_file = '~\.dnd-assistant\token'
+
+# Whisper
+whisper_model = "large-v3-turbo"
+language = "en"
+
+# Scribe (LM Studio). The key is read from this environment variable.
+scribe_url = "http://127.0.0.1:1234/v1"
+scribe_model = "qwen/qwen3.5-9b"
+scribe_key_env = "LMSTUDIO_API_KEY"
+scribe_interval_s = 300
+scribe_burst = 150
+
+# Your character's actor name in Foundry.
+actor_name = "Paylon"
