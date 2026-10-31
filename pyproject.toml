@@ -30,6 +30,7 @@ packages = ["src/dnd_assistant"]
 testpaths = ["tests"]
 addopts = "-m \"not gpu\""
 markers = ["gpu: needs the RTX 4080 and the Whisper model"]
+asyncio_default_fixture_loop_scope = "function"
 
 [tool.uv]
 required-environments = ["sys_platform == 'win32' and platform_machine == 'AMD64'"]
