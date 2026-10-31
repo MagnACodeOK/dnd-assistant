@@ -1,0 +1,17 @@
+{
+  "DNDA": {
+    "enabled": {
+      "name": "Send to my PC",
+      "hint": "Send this browser's chat, rolls, combat turns and your character's state to the D&D Table Assistant running on this computer. Off by default; only turn it on in your own browser."
+    },
+    "port": {
+      "name": "Assistant port",
+      "hint": "The port the assistant's hub listens on (127.0.0.1). Default 8765."
+    },
+    "token": {
+      "name": "Assistant token",
+      "hint": "Paste the token printed by `dnd-assistant token --show`."
+    },
+    "noCharacter": "D&D Table Assistant: no character is assigned to your user, so character state won't be sent."
+  }
+}
