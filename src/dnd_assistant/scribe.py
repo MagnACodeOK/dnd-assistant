@@ -97,6 +97,9 @@ class LMStudioClient:
             "messages": [{"role": "system", "content": system}, {"role": "user", "content": user}],
             "response_format": {"type": "json_schema", "json_schema": {"name": "facts", "strict": True, "schema": schema}},
             "temperature": 0.2,
+            # Fact extraction needs no hidden reasoning; with it on, Qwen 3.5 spent 6-14k tokens
+            # (86-184 s) thinking per batch and sometimes ran out of context before answering.
+            "reasoning_effort": "none",
         }
         try:
             with httpx.Client(timeout=timeout, transport=self.transport) as client:

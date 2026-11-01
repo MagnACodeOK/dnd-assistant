@@ -252,6 +252,9 @@ def test_lmstudio_client_request_and_parse():
     assert seen["body"]["response_format"]["type"] == "json_schema"
     assert seen["body"]["response_format"]["json_schema"]["strict"] is True
     assert [m["role"] for m in seen["body"]["messages"]] == ["system", "user"]
+    # Qwen 3.5 otherwise "thinks" for 6-14k tokens (86-184 s, sometimes filling the 16K context);
+    # with reasoning off the same batch took 11 s.
+    assert seen["body"]["reasoning_effort"] == "none"
 
 
 def test_lmstudio_client_errors_become_scribe_errors():
